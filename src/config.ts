@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import bunyan from 'bunyan';
 
 dotenv.config({});
 
@@ -23,8 +24,11 @@ class Config {
         this.REDIS_HOST = process.env.REDIS_HOST || '';
     }
 
+    public createLogger(name: string): bunyan {
+        return bunyan.createLogger({ name, level: 'debug' })
+    }
+
     public validateConfig(): void {
-        console.log(this);
         for (const [key, value] of Object.entries(this)) {
             if(value === undefined) {
                 throw new Error(`Configuration ${key} is undefined.`);
