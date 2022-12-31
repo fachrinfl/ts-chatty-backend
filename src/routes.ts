@@ -1,9 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-empty-function */
+import { authRoutes } from '@auth/routes/authRoutes';
 import { Application } from 'express';
 
-export default (app: Application) => {
-  const routes = () => {};
+const BASE_PATH = '/api/v1';
 
+export default (app: Application) => {
+  const routes = () => {
+    app.use(BASE_PATH, authRoutes.routes());
+  };
   routes();
 };
