@@ -1,6 +1,6 @@
 import HTTP_STATUS from 'http-status-codes';
 import { UploadApiResponse } from 'cloudinary';
-import { ISignUpData } from './../interfaces/auth.interface';
+import { ISignUpData } from '@auth/interfaces/auth.interface';
 import { ObjectId } from 'mongodb';
 import { Request, Response } from 'express';
 import { joiValidation } from '@global/decorators/joi-validation.decorators';
