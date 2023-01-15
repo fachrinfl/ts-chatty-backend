@@ -15,7 +15,7 @@ export interface IUserDocument extends Document {
   quote: string;
   location: string;
   blocked: mongoose.Types.ObjectId[];
-  blodkedBy: mongoose.Types.ObjectId[];
+  blockedBy: mongoose.Types.ObjectId[];
   followersCount: number;
   followingCount: number;
   notifications: INotificationSettings;
@@ -48,10 +48,10 @@ export interface IBasicInfo {
 }
 
 export interface ISocialLinks {
-  facebook: boolean;
-  instagram: boolean;
-  twitter: boolean;
-  youtube: boolean;
+  facebook: string;
+  instagram: string;
+  twitter: string;
+  youtube: string;
 }
 
 export interface ISearchUser {

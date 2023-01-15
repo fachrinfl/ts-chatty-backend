@@ -1,3 +1,5 @@
+import { UserCache } from '@service/redis/user.cache';
+import { IUserDocument } from '@user/interfaces/user.interface';
 import HTTP_STATUS from 'http-status-codes';
 import { UploadApiResponse } from 'cloudinary';
 import { ISignUpData } from '@auth/interfaces/auth.interface';
@@ -10,6 +12,9 @@ import { authServices } from '@service/db/auth.service';
 import { BadRequestError } from '@global/helpers/error-handler';
 import { Helpers } from '@global/helpers/helpers';
 import { upload } from '@global/helpers/cloudinary-upload';
+import { config } from '@root/config';
+
+const userCache: UserCache = new UserCache();
 
 export class SignUp {
   @joiValidation(signupSchema)
@@ -37,6 +42,10 @@ export class SignUp {
       throw new BadRequestError('File upload: Error occurated. Try again.');
     }
 
+    const userDataForCache: IUserDocument = SignUp.prototype.userData(authData, userObjectId);
+    userDataForCache.profilePicture = `https://res/cloudinary.com/${config.CLOUD_API_KEY}/image/upload/v${result.version}/${userObjectId}`;
+    await userCache.saveUserToCache(`${userObjectId}`, uId, userDataForCache);
+
     res.status(HTTP_STATUS.CREATED).json({
       message: 'User created successfully',
       authData
@@ -54,5 +63,42 @@ export class SignUp {
       avatarColor,
       createdAt: new Date()
     } as IAuthDocument;
+  }
+
+  private userData(data: IAuthDocument, userObjectId: ObjectId): IUserDocument {
+    const {_id, username, email, uId, password, avatarColor} = data;
+    return {
+      _id: userObjectId,
+      authId: _id,
+      uId,
+      username: Helpers.firstLatterUppercase(username),
+      email,
+      password,
+      avatarColor,
+      profilePicture: '',
+      blocked: [],
+      blockedBy: [],
+      work: '',
+      location: '',
+      school: '',
+      quote: '',
+      bgImageVersion: '',
+      bgImageId: '',
+      followersCount: 0,
+      followingCount: 0,
+      postsCount: 0,
+      notifications: {
+        messages: true,
+        reactions: true,
+        comments: true,
+        follows: true
+      },
+      social: {
+        facebook: '',
+        instagram: '',
+        twitter: '',
+        youtube: ''
+      }
+    } as unknown as IUserDocument;
   }
 }
