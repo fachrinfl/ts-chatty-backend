@@ -22,7 +22,7 @@ import applicationRoutes from '@root/routes';
 import Logger from 'bunyan';
 import { CustomError, IErrorResponse } from '@global/helpers/error-handler';
 
-const SERVER_PORT = 6000;
+const SERVER_PORT = 5001;
 const log: Logger = config.createLogger('server');
 
 export class ChattyServer {
