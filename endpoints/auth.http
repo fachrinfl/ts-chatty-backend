@@ -1,4 +1,4 @@
-@baseUrl = http://localhost:6000
+@baseUrl = http://localhost:5001
 
 @urlPath = api/v1
 

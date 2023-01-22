@@ -15,6 +15,8 @@ import { Helpers } from '@global/helpers/helpers';
 import { upload } from '@global/helpers/cloudinary-upload';
 import { config } from '@root/config';
 import { omit } from 'lodash';
+import { userQueue } from '@service/queues/user.queue';
+import JWT from 'jsonwebtoken';
 
 const userCache: UserCache = new UserCache();
 
@@ -50,11 +52,29 @@ export class SignUp {
 
     omit(userDataForCache, ['uId', 'username', 'email', 'avatarColor', 'password']);
     authQueue.addAuthUserJob('addAuthUserToDB', { value: userDataForCache });
+    userQueue.addUserJob('addUserToDB', { value: userDataForCache});
+
+    const userJWT: string = SignUp.prototype.signToken(authData, userObjectId);
+    req.session = { jwt: userJWT };
 
     res.status(HTTP_STATUS.CREATED).json({
       message: 'User created successfully',
-      authData
+      user: userDataForCache,
+      token: userJWT
     });
+  }
+
+  private signToken(data: IAuthDocument, userObjectId: ObjectId): string {
+    return JWT.sign(
+      {
+        userId: userObjectId,
+        uId: data.uId,
+        email: data.email,
+        username: data.username,
+        avatarColor: data.avatarColor,
+      },
+      config.JWT_TOKEN!
+    );
   }
 
   private signupData(data: ISignUpData): IAuthDocument {
