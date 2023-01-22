@@ -25,7 +25,6 @@ export class SignIn {
     }
 
     const user: IUserDocument = await userService.getUserByAuthId(`${existingUser._id}`);
-
     const userJWT: string = JWT.sign(
       {
         userId: user._id,
@@ -38,9 +37,17 @@ export class SignIn {
     );
 
     req.session = { jwt: userJWT };
+    const userDocument: IUserDocument = {
+      ...user,
+      uId: existingUser!.uId,
+      email: existingUser!.email,
+      username: existingUser!.username,
+      avatarColor: existingUser!.avatarColor,
+    } as IUserDocument;
+
     res.status(HTTP_STATUS.OK).json({
       message: 'User login successfully',
-      user: existingUser,
+      user: userDocument,
       token: userJWT
     });
   }

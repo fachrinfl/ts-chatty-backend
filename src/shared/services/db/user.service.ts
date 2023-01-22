@@ -19,10 +19,10 @@ class UserService {
 
   public async getUserByAuthId(authId: string): Promise<IUserDocument> {
     const users: IUserDocument[] = await UserModel.aggregate([
-      { $match : { authId: new mongoose.Types.ObjectId(authId) }},
-      { $lookup : { from: 'Auth', localField: 'authId', foreignField: '_id', as: 'authId' }},
+      { $match: { authId: new mongoose.Types.ObjectId(authId) } },
+      { $lookup: { from: 'Auth', localField: 'authId', foreignField: '_id', as: 'authId' } },
       { $unwind: '$authId' },
-      { $project: this.aggregateProject()}
+      { $project: this.aggregateProject() }
     ]);
     return users[0];
   }
@@ -34,7 +34,7 @@ class UserService {
       uId: '$authId.uId',
       email: '$authId.email',
       avatarColor: '$authId.avatarColor',
-      createAt: '$authId.createdAt',
+      createdAt: '$authId.createdAt',
       postsCount: 1,
       work: 1,
       school: 1,
@@ -43,8 +43,8 @@ class UserService {
       blocked: 1,
       blockedBy: 1,
       followersCount: 1,
-      followingCoung: 1,
-      notification: 1,
+      followingCount: 1,
+      notifications: 1,
       social: 1,
       bgImageVersion: 1,
       bgImageId: 1,

@@ -51,7 +51,7 @@ export class SignUp {
     await userCache.saveUserToCache(`${userObjectId}`, uId, userDataForCache);
 
     omit(userDataForCache, ['uId', 'username', 'email', 'avatarColor', 'password']);
-    authQueue.addAuthUserJob('addAuthUserToDB', { value: userDataForCache });
+    authQueue.addAuthUserJob('addAuthUserToDB', { value: authData });
     userQueue.addUserJob('addUserToDB', { value: userDataForCache});
 
     const userJWT: string = SignUp.prototype.signToken(authData, userObjectId);
