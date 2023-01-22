@@ -3,7 +3,7 @@ import mongoose, { model, Model, Schema } from 'mongoose';
 
 const userSchema: Schema = new Schema({
   authId: { type: mongoose.Schema.Types.ObjectId, ref: 'Auth', index: true },
-  profilePicture: { type: Number, default: 0 },
+  profilePicture: { type: String, default: 0 },
   postsCount: { type: Number, default: 0 },
   followersCount: { type: Number, default: 0 },
   followingCount: { type: Number, default: 0 },
