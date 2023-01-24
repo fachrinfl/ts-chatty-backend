@@ -1,5 +1,6 @@
 import express, { Router } from 'express';
 import { CurrentUser } from '@auth/controllers/current-user';
+import { authMiddleware } from '@global/helpers/auth-middleware';
 
 class CurrentUserRoutes {
   private router: Router;
@@ -9,7 +10,7 @@ class CurrentUserRoutes {
   }
 
   public reoutes(): Router {
-    this.router.get('/currentUser', CurrentUser.prototype.read);
+    this.router.get('/currentUser', authMiddleware.checkAuthentication, CurrentUser.prototype.read);
 
     return this.router;
   }
