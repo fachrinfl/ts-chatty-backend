@@ -10,10 +10,14 @@ class CurrentUserRoutes {
   }
 
   public reoutes(): Router {
-    this.router.get('/currentUser', authMiddleware.checkAuthentication, CurrentUser.prototype.read);
+    this.router.get(
+      '/currentUser',
+      authMiddleware.checkAuthentication,
+      CurrentUser.prototype.read
+    );
 
     return this.router;
   }
-};
+}
 
 export const currentUserRoutes: CurrentUserRoutes = new CurrentUserRoutes();

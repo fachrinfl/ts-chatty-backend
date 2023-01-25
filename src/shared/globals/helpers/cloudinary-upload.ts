@@ -1,4 +1,7 @@
-import cloudinary, { UploadApiResponse, UploadApiErrorResponse } from 'cloudinary';
+import cloudinary, {
+  UploadApiResponse,
+  UploadApiErrorResponse,
+} from 'cloudinary';
 
 export function upload(
   file: string,
@@ -12,9 +15,12 @@ export function upload(
       {
         public_id,
         overwrite,
-        invalidate
+        invalidate,
       },
-      (error:  UploadApiErrorResponse | undefined, result: UploadApiResponse | undefined) => {
+      (
+        error: UploadApiErrorResponse | undefined,
+        result: UploadApiResponse | undefined
+      ) => {
         if (error) resolve(error);
         resolve(result);
       }

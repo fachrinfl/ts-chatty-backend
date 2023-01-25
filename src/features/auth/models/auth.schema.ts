@@ -11,32 +11,44 @@ const authSchema: Schema = new Schema(
     email: { type: String },
     password: { type: String },
     avatarColor: { type: String },
-    createdAt: { type: Date, default: Date.now }
+    createdAt: { type: Date, default: Date.now },
   },
   {
     toJSON: {
       transform(_doc, ret) {
         delete ret.password;
         return ret;
-      }
-    }
+      },
+    },
   }
 );
 
 authSchema.pre('save', async function (this: IAuthDocument, next: () => void) {
-  const hashedPassword: string = await hash(this.password as string, SALT_ROUND);
+  const hashedPassword: string = await hash(
+    this.password as string,
+    SALT_ROUND
+  );
   this.password = hashedPassword;
   next();
 });
 
-authSchema.methods.comparePassword = async function (password: string): Promise<boolean> {
-  const hashedPassword: string = await (this as unknown as IAuthDocument).password!;
+authSchema.methods.comparePassword = async function (
+  password: string
+): Promise<boolean> {
+  const hashedPassword: string = await (this as unknown as IAuthDocument)
+    .password!;
   return compare(password, hashedPassword);
 };
 
-authSchema.methods.hashedPassword = async function (password: string): Promise<string> {
+authSchema.methods.hashedPassword = async function (
+  password: string
+): Promise<string> {
   return hash(password, SALT_ROUND);
 };
 
-const AuthModel: Model<IAuthDocument> = model<IAuthDocument>('Auth', authSchema, 'Auth');
+const AuthModel: Model<IAuthDocument> = model<IAuthDocument>(
+  'Auth',
+  authSchema,
+  'Auth'
+);
 export { AuthModel };

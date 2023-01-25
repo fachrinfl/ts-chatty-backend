@@ -7,7 +7,7 @@ export class SignOut {
     res.status(HTTP_STATUS.OK).json({
       message: 'Logout successful',
       user: {},
-      token: ''
+      token: '',
     });
   }
 }

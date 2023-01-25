@@ -19,6 +19,4 @@ class UserWorker {
   }
 }
 
-export const userWorker: UserWorker = new UserWorker;
-
-
+export const userWorker: UserWorker = new UserWorker();

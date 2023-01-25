@@ -14,17 +14,22 @@ export class SignIn {
   @joiValidation(loginSchema)
   public async read(req: Request, res: Response): Promise<void> {
     const { username, password } = req.body;
-    const existingUser: IAuthDocument = await authServices.getAuthUserByUsername(username);
+    const existingUser: IAuthDocument =
+      await authServices.getAuthUserByUsername(username);
     if (!existingUser) {
       throw new BadRequestError('Invalid credentials');
     }
 
-    const passwordsMatch: boolean = await existingUser.comparePassword(password);
+    const passwordsMatch: boolean = await existingUser.comparePassword(
+      password
+    );
     if (!passwordsMatch) {
       throw new BadRequestError('Invalid credentials');
     }
 
-    const user: IUserDocument = await userService.getUserByAuthId(`${existingUser._id}`);
+    const user: IUserDocument = await userService.getUserByAuthId(
+      `${existingUser._id}`
+    );
     const userJWT: string = JWT.sign(
       {
         userId: user._id,
@@ -48,7 +53,7 @@ export class SignIn {
     res.status(HTTP_STATUS.OK).json({
       message: 'User login successfully',
       user: userDocument,
-      token: userJWT
+      token: userJWT,
     });
   }
 }

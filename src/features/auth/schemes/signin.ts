@@ -12,7 +12,7 @@ const loginSchema: ObjectSchema = Joi.object().keys({
     'string.min': 'Invalid password',
     'string.max': 'Invalid password',
     'string.empty': 'password is a required field',
-  })
+  }),
 });
 
 export { loginSchema };
