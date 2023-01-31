@@ -1,3 +1,4 @@
+import { emailQueue } from './../../../shared/services/queues/email.queue';
 import { Request, Response } from 'express';
 import { config } from '@root/config';
 import JWT from 'jsonwebtoken';
@@ -7,9 +8,11 @@ import { authServices } from '@service/db/auth.service';
 import { BadRequestError } from '@global/helpers/error-handler';
 import { loginSchema } from '@auth/schemes/signin';
 import { IAuthDocument } from '@auth/interfaces/auth.interface';
-import { IUserDocument } from '@user/interfaces/user.interface';
+import { IResetPasswordParams, IUserDocument } from '@user/interfaces/user.interface';
 import { userService } from '@service/db/user.service';
-import { mailTransport } from '@service/emails/mail.transport';
+import moment from 'moment';
+import publicIP from 'ip';
+import { resetPasswordTemplate } from '@service/emails/templates/reset-password/reset-password-template';
 
 export class SignIn {
   @joiValidation(loginSchema)
@@ -51,7 +54,14 @@ export class SignIn {
       avatarColor: existingUser!.avatarColor,
     } as IUserDocument;
 
-    await mailTransport.sendEmail('estelle.heaney76@ethereal.email', 'Testing development email', 'This is a test email to show the email work.');
+    const templateParams: IResetPasswordParams = {
+      username: existingUser.username!,
+      email: existingUser.email!,
+      ipaddress: publicIP.address(),
+      date: moment().format('DD/MM/YYYY HH:mm')
+    };
+    const template: string = resetPasswordTemplate.passwordResetTemplate(templateParams);
+    emailQueue.addEmailJob('forgotPasswordEmail', {template, receiverEmail: 'elza.bechtelar@ethereal.email', subject: 'Password reset confirmation'});
 
     res.status(HTTP_STATUS.OK).json({
       message: 'User login successfully',
