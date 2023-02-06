@@ -39,3 +39,24 @@ Content-Type: application/json
 Accept: application/json
 withCredentials: true
 
+###
+POST {{baseUrl}}/{{urlPath}}/forgot-password
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "email": "dan@test.com"
+}
+
+###
+POST {{baseUrl}}/{{urlPath}}/forgot-password/asdfa
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "password": "qwerty",
+  "confirmPassword": "qwerty",
+}
+
