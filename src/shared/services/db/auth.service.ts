@@ -8,12 +8,10 @@ class AuthService {
   }
 
   public async updatePasswordToken(authId: string, token: string, tokenExpiration: number): Promise<void> {
-    await AuthModel.updateOne({
-      _id: authId
-    }), {
+    await AuthModel.updateOne({ _id: authId }, {
       passwordResetToken: token,
       passwordResetExpires: tokenExpiration
-    };
+    });
   }
 
   public async getUserByUsernameOrEmail(
