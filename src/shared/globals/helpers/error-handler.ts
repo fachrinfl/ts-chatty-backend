@@ -1,5 +1,6 @@
 import HTTP_STATUS from 'http-status-codes';
 
+
 export interface IErrorResponse {
   message: string;
   statusCode: number;
