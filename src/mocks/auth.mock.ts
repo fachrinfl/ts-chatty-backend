@@ -4,7 +4,7 @@ import { AuthPayload, IAuthDocument } from '@auth/interfaces/auth.interface';
 import { Response } from 'express';
 
 export const authMockRequest = (sessionData: IJWT, body: IAuthMock, currentUser?: AuthPayload | null, params?: any) => ({
-  sessionData: sessionData,
+  session: sessionData,
   body,
   params,
   currentUser
