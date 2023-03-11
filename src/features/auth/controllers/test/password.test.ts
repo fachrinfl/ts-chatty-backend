@@ -32,7 +32,7 @@ describe('Password', () => {
 
       Password.prototype.create(req, res).catch((error: CustomError) => {
         expect(error.statusCode).toEqual(400);
-        expect(error.serializeError().message).toEqual('Field must be valid');
+        expect(error.serializeError().message).toEqual('Email must be valid');
       });
     });
 
