@@ -9,7 +9,7 @@ class CurrentUserRoutes {
     this.router = express.Router();
   }
 
-  public reoutes(): Router {
+  public routes(): Router {
     this.router.get(
       '/currentUser',
       authMiddleware.checkAuthentication,

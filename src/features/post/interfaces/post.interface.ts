@@ -27,7 +27,7 @@ export interface IPostDocument extends Document {
   gifUrl: string;
   privacy?: string;
   reactions?: IReactions;
-  createAt: Date;
+  createdAt: Date;
 }
 
 export interface IGetPostsQuery {

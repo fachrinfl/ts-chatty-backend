@@ -1,9 +1,13 @@
 import { joiValidation } from '@global/decorators/joi-validation.decorators';
 import { IPostDocument } from '@post/interfaces/post.interface';
 import { postSchema } from '@post/schemes/post.schemes';
+import { PostCache } from '@service/redis/post.cache';
+import { socketIOPostObject } from '@socket/post';
 import { Request, Response } from 'express';
 import HTTP_STATUS from 'http-status-codes';
 import { ObjectId } from 'mongodb';
+
+const postCache: PostCache = new PostCache();
 
 export class Create {
   @joiValidation(postSchema)
@@ -11,7 +15,7 @@ export class Create {
     const { post, bgColor, privacy, gifUrl, profilePicture, feelings } = req.body;
 
     const postObjectId: ObjectId = new ObjectId();
-    const createPost: IPostDocument = {
+    const createdPost: IPostDocument = {
       _id: postObjectId,
       userId: req.currentUser!.userId,
       username: req.currentUser!.username,
@@ -26,17 +30,17 @@ export class Create {
       commentsCount: 0,
       imgVersion: '',
       imgId: '',
-      createAt: new Date(),
-      reactions: {
-        like: 0,
-        angry: 0,
-        happy: 0,
-        love: 0,
-        sad: 0,
-        wow: 0,
-      }
+      createdAt: new Date(),
+      reactions: { like: 0, love: 0, happy: 0, sad: 0, wow: 0, angry: 0 }
     } as IPostDocument;
+    socketIOPostObject.emit('add post', createdPost);
+    await postCache.savePostToCache({
+      key: postObjectId,
+      currentUserId: `${req.currentUser!.userId}`,
+      uId: `${req.currentUser!.uId}`,
+      createdPost
+    });
 
-    res.status(HTTP_STATUS.CREATED).json({ messsage: 'Post created successfully', data: createPost });
+    res.status(HTTP_STATUS.CREATED).json({ messsage: 'Post created successfully' });
   }
 }
