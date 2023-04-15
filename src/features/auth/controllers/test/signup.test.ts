@@ -2,7 +2,7 @@ import { CustomError } from '@global/helpers/error-handler';
 import { Request, Response } from 'express';
 import { SignUp } from '@auth/controllers/signup';
 import { authMockRequest, authMockResponse, authMock } from '@root/mocks/auth.mock';
-import * as cloudinaryUploads from '@global/helpers/cloudinary-upload';
+import * as cloudinaryuploadss from '@global/helpers/cloudinary-upload';
 import { authServices } from '@service/db/auth.service';
 import { UserCache } from '@service/redis/user.cache';
 
@@ -182,7 +182,7 @@ describe('SignUp', () => {
 
     jest.spyOn(authServices, 'getUserByUsernameOrEmail').mockResolvedValue(null as any);
     const userSpy = jest.spyOn(UserCache.prototype, 'saveUserToCache');
-    jest.spyOn(cloudinaryUploads, 'upload').mockImplementation((): any => Promise.resolve({
+    jest.spyOn(cloudinaryuploadss, 'uploads').mockImplementation((): any => Promise.resolve({
       version: '123456789',
       public_id: '123456'
     }));

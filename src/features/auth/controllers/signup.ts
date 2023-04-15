@@ -12,7 +12,7 @@ import { IAuthDocument } from '@auth/interfaces/auth.interface';
 import { authServices } from '@service/db/auth.service';
 import { BadRequestError } from '@global/helpers/error-handler';
 import { Helpers } from '@global/helpers/helpers';
-import { upload } from '@global/helpers/cloudinary-upload';
+import { uploads } from '@global/helpers/cloudinary-upload';
 import { config } from '@root/config';
 import { omit } from 'lodash';
 import { userQueue } from '@service/queues/user.queue';
@@ -42,7 +42,7 @@ export class SignUp {
       password,
       avatarColor,
     });
-    const result: UploadApiResponse = (await upload(
+    const result: UploadApiResponse = (await uploads(
       avatarImage,
       `${userObjectId}`,
       true,
