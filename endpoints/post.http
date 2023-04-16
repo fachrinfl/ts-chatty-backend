@@ -45,7 +45,7 @@ Accept: application/json
 withCredentials: true
 
 ###
-DELETE  {{baseUrl}}/{{urlPath}}/post/643b65d830e309740340fc4b
+DELETE  {{baseUrl}}/{{urlPath}}/post/643b65d230e309740340fc47
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
