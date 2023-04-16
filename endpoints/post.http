@@ -16,6 +16,7 @@ withCredentials: true
   "profilePicture": "https://res.cloudinary.com/dyamr9ym3/image/upload/v1659189696/62e539c0d8b514f6e42e3b5b",
   "feelings": ""
 }
+
 ###
 POST {{baseUrl}}/{{urlPath}}/post/image/post
 Content-Type: application/json
@@ -49,3 +50,20 @@ DELETE  {{baseUrl}}/{{urlPath}}/post/643b65d230e309740340fc47
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
+
+###
+PUT {{baseUrl}}/{{urlPath}}/post/643b66f4698bbfcf059a42b7
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "post": "Post from api update",
+  "bgColor": "#ffffff",
+  "privacy": "Public",
+  "gifUrl": "",
+  "profilePicture": "https://res.cloudinary.com/dyamr9ym3/image/upload/v1659189696/62e539c0d8b514f6e42e3b5b",
+  "feelings": "",
+  "imgId": "",
+  "imgVersion": ""
+}
