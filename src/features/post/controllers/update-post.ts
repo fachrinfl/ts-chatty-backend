@@ -1,7 +1,7 @@
 import HTTP_STATUS from 'http-status-codes';
 import { joiValidation } from '@global/decorators/joi-validation.decorators';
 import { IPostDocument } from '@post/interfaces/post.interface';
-import { postSchema, postWithImageSchema } from '@post/schemes/post.schemes';
+import { postSchema, postWithImageSchema } from '@post/schemes/post';
 import { postQueue } from '@service/queues/post.queue';
 import { PostCache } from '@service/redis/post.cache';
 import { socketIOPostObject } from '@socket/post';

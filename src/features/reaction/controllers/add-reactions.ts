@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
 import HTTP_STATUS from 'http-status-codes';
 import { joiValidation } from '@global/decorators/joi-validation.decorators';
-import { addReactionSchema } from '@reaction/schemes/reaction.schemes';
+import { addReactionSchema } from '@reaction/schemes/reaction';
 import { IReactionDocument, IReactionJob } from '@reaction/interfaces/reaction.interface';
 import { ReactionsCache } from '@service/redis/reactions.cache';
 import { reactionQueue } from '@service/queues/reaction.queue';

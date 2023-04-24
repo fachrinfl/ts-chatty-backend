@@ -2,7 +2,7 @@ import { joiValidation } from '@global/decorators/joi-validation.decorators';
 import { uploads } from '@global/helpers/cloudinary-upload';
 import { BadRequestError } from '@global/helpers/error-handler';
 import { IPostDocument } from '@post/interfaces/post.interface';
-import { postSchema, postWithImageSchema } from '@post/schemes/post.schemes';
+import { postSchema, postWithImageSchema } from '@post/schemes/post';
 import { postQueue } from '@service/queues/post.queue';
 import { PostCache } from '@service/redis/post.cache';
 import { socketIOPostObject } from '@socket/post';
