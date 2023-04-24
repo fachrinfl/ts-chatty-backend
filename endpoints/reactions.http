@@ -24,3 +24,27 @@ Accept: application/json
 withCredentials: true
 
 {}
+
+###
+GET  {{baseUrl}}/{{urlPath}}/post/reactions/6445098c3aa7ef5ca7a5079f
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{}
+
+###
+GET  {{baseUrl}}/{{urlPath}}/post/single/reaction/username/Dannya2/6445098c3aa7ef5ca7a5079f
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{}
+
+###
+GET  {{baseUrl}}/{{urlPath}}/post/reactions/username/Dannya2
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{}
