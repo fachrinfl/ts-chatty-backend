@@ -32,7 +32,7 @@ export class Add {
       username: req.currentUser!.username,
       comment: commentData
     };
-    commentQueue.addICommentJob('addCommentToDB', databaseCommentData);
+    commentQueue.addCommentJob('addCommentToDB', databaseCommentData);
     res.status(HTTP_STATUS.OK).json({ message: 'Comment created successfully' });
   }
 }

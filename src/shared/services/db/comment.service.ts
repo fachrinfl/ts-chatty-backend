@@ -8,7 +8,7 @@ import { IUserDocument } from '@user/interfaces/user.interface';
 
 const userCache: UserCache = new UserCache();
 
-class CommentServie {
+class CommentService {
   public async addCommentToDB(commentData: ICommentJob): Promise<void> {
     const { postId, userTo, userFrom, comment, username } = commentData;
     const comments: Promise<ICommentDocument> = CommentsModel.create(comment);
@@ -34,10 +34,11 @@ class CommentServie {
     const commentsNamesList: ICommentNameList[] = await CommentsModel.aggregate([
       { $match: query },
       { $sort: sort },
-      { $group: { _id: null, names: { $addToSet: '$username' }, count: { $sum: 1 } } }
+      { $group: { _id: null, names: { $addToSet: '$username' }, count: { $sum: 1 } } },
+      { $project: { _id: 0 } }
     ]);
     return commentsNamesList;
   }
 }
 
-export const commentService: CommentServie = new CommentServie();
+export const commentService: CommentService = new CommentService();

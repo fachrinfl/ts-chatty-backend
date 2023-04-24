@@ -8,8 +8,8 @@ export interface IReactionDocument extends Document {
   type: string;
   postId: string;
   profilePicture: string;
-  createAt?: Date;
-  userTo: string | ObjectId;
+  createdAt?: Date;
+  userTo?: string | ObjectId;
   comment?: string;
 }
 
